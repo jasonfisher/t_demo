@@ -28,6 +28,10 @@ BEHAVIORS:
 authentication
  -- before filters, session controller
 -- protect_from_forgery?
+-- if user is not signed in, go to authenticate user (?!)
+-- if logged in, offer up partial containing log out button/option
+
+
 
 QUESTIONS:
 in config_master wtf is new_session_url defined
@@ -36,6 +40,31 @@ in config_master wtf is new_session_url defined
 PLAN:
 start with auth
 
+PROBLEMS with devise:
+where is my cookie?
+i can't find a log out anywhere
+multiple users how?
+there is a remember me button but it just remembers anyway!
+also no username at signup
+i can be signed in with chrome and firefox at the same time
+
+
+
+Got auth working, now what?
+Need to produce a main controller, but named what?
+What actions will there be?
+follow somebody
+see who follows you
+send a tweet
+read somebodys tweets (can be on user page)
+so maybe.....  users/self and /other ?  and maybe /showall or /suggestions?
+
+
+
+
+
+
+===============================================================================
 
 From devise:
 Some setup you must do manually if you haven't yet:
