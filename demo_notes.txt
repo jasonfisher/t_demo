@@ -21,6 +21,7 @@ block
 mute
 favorites
 @'s (not sure how that actually works), seems to take to that person
+LATER: min chars for username, username along with email
 
 
 
