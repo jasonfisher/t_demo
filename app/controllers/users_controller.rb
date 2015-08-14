@@ -19,5 +19,6 @@ class UsersController < ApplicationController
   end
 
   def signout
+
   end
 end
