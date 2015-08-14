@@ -7,6 +7,7 @@ gem 'rails', '4.2.3'
 gem "mysql2" # Required for:  Ruby mysql connecter
 gem 'rake', '~>10.4'
 gem 'devise'
+gem 'validates_email_format_of'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
