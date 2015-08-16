@@ -15,12 +15,9 @@ class User < ActiveRecord::Base
             :uniqueness => {
                 :case_sensitive => false
             }
-  validates :email,
-            :presence => true,
-            :uniqueness => {
-                :case_sensitive => false
-            }
+  #NOTE: gem validates_email_format_of also checks for presence, and for uniqueness (case insensitive)
   validates_email_format_of :email, :message => 'does not look like a valid email address'
+
 
   after_create :follow_self
 
