@@ -13,6 +13,8 @@ RSpec.describe User, type: :model do
 
   context "when creating a user" do
 
+    Following.delete_all
+
     it "fails validation with no username" do
      expect(User.create(:username => nil).errors[:username].size).to eq(1)
      expect(User.create(:username => nil).errors[:username]).to include("can't be blank")
@@ -53,6 +55,14 @@ RSpec.describe User, type: :model do
       expect(User.create(:email => @user_1.email.upcase).errors[:email]).to include("has already been taken")
     end
 
+#surely there is a more elegant way to test this but I think suffices to prove the point
+    it "should automatically create a following of itself upon creation" do
+      expect(Following.count).to eq(0)
+      @user_1.save!
+      expect(Following.count).to eq(1)
+      expect(Following.first.followee_id).to eq(@user_1.id)
+      expect(Following.first.follower_id).to eq(@user_1.id)
+     end
   end
 
 end
