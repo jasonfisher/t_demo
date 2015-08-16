@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -20,10 +22,25 @@ class User < ActiveRecord::Base
             }
   validates_email_format_of :email, :message => 'does not look like a valid email address'
 
+  after_create :follow_self
+
+  def follow_self
+    follow(self.id)
+  end
+
   def follow(other_user_id)
     new_following = Following.new(:follower_id => self.id, :followee_id => other_user_id)
-    logger.warn "created new following: #{new_following}"
+    logger.debug "created new following: #{new_following}"
     new_following.save!
   end
+
+  def follows?(user_id)
+    following = Following.find(:follower_id => self.id, :followee_id => user_id)
+    return following ? true : false
+  end
+
+
+
+
 
 end
