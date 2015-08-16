@@ -8,6 +8,7 @@ gem "mysql2" # Required for:  Ruby mysql connecter
 gem 'rake', '~>10.4'
 gem 'devise'
 gem 'validates_email_format_of'
+gem "factory_girl_rails", "~> 4.0"
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -38,7 +39,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
-  gem "factory_girl_rails", '~>4.5', require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
