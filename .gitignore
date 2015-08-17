@@ -18,6 +18,7 @@
 
 # Personal developer notes
 ./demo_notes*
+/dev_notes/*
 
 # Ignore rubymine workspace
 .idea/workspace.xml
