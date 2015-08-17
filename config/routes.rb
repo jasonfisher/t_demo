@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get 'users/self'
 
-  get 'users/other'
-
-  get 'users/all'
-
-  get 'users/signout'
+  # get 'users/other'
+  #
+  # get 'users/all'
+  #
+  # get 'users/signout'
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

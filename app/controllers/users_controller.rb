@@ -3,11 +3,11 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def other
-  end
-
-  def all
-  end
+  # def other
+  # end
+  #
+  # def all
+  # end
 
   def index
     if :user_signed_in?
@@ -19,6 +19,6 @@ class UsersController < ApplicationController
   end
 
   def signout
-
+    redirect_to root_path
   end
 end
