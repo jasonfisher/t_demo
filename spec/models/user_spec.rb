@@ -71,23 +71,26 @@ RSpec.describe User, type: :model do
       @followee = FactoryGirl.create(:user)
     end
 
-    it "should return the newly-created Following" do
+    it "should create and return a new Following" do
       expect(@follower.follow(@followee)).to eq(Following.where(["follower_id = ? and followee_id = ?", @follower.id, @followee.id]).first)
     end
 
-    it "should return true from follows? method" do
 
-    end
-
+#NOTE: with intertwined models what is the best way to handle this? (error creation at Following level bubbled up through follow method)
     it "should validate uniqueness of follow relationship" do
+      @follower.follow(@followee)
+      expect(@follower.follow(@followee).errors[:follower_id]).to include("already following that user")
     end
 
-    # it "should create a Following"
-    #
     # it "its followees should include the newly-followed User"
-    #
+
     # it "the followed User's followers should include the newly-following User"
     #
+
+    #NOTE: don't create and test this until we have need for it in the code!
+    # it "should return true from follows? method" do
+    #
+    # end
 
   end
 
