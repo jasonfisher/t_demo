@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def self
-
+    @user = current_user
   end
 
   def other
