@@ -21,22 +21,26 @@ class User < ActiveRecord::Base
 
   after_create :follow_self
 
-  def follow_self
-    follow(self)
-  end
-
   def follow(other_user)
     Following.create(:follower_id => self.id, :followee_id => other_user.id)
   end
 
-  # NOTE: this should optimally also be cleaned up with detangling of User and Following models in the future
-
-  def followees
-
+  # NOTE: followers and followees methods should optimally also be cleaned up with detangling of User and Following models in the future
+  def followers
 #TODO! REFACTOR: this is an N+1 query situation that needs eager loading to fix it;
 # however, finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway)
+    follower_ids = Following.where(:followee_id => self.id).order(:follower_id).pluck(:follower_id)
+    followers = []
+    follower_ids.each do |follower_id|
+      followers << User.find(follower_id)
+    end
+    followers
+  end
 
-    followee_ids = Following.where(:follower_id => self.id).pluck(:followee_id)
+  # NOTE: this should optimally also be cleaned up with detangling of User and Following models in the future
+  def followees
+#TODO! REFACTOR: this is an N+1 query situation that needs eager loading to fix it;
+    followee_ids = Following.where(:follower_id => self.id).order(:followee_id).pluck(:followee_id)
     followees = []
     followee_ids.each do |followee_id|
       followees << User.find(followee_id)
@@ -49,8 +53,10 @@ class User < ActiveRecord::Base
     return following ? true : false
   end
 
-
-
+private
+  def follow_self
+    follow(self)
+  end
 
 
 end

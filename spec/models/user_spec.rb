@@ -13,7 +13,9 @@ RSpec.describe User, type: :model do
 
   context "when creating a user" do
 
-    Following.delete_all
+    before(:each) do
+      Following.delete_all
+    end
 
     it "fails validation with no username" do
      expect(User.create(:username => nil).errors[:username].size).to eq(1)
@@ -64,17 +66,27 @@ RSpec.describe User, type: :model do
       expect(Following.first.follower_id).to eq(@user_1.id)
     end
 
-  #   it "should make the user its own and only follower" do
-  #     expect(@follower.followers).to eq(@follower)
-  #   end
-  #
-  #   it "should make the user its own and only followee" do
-  #     expect(@follower.followees).to eq(@follower)
-  #
+#TODO: obvious case for refactor of some sort here
+    context "when User automatically follows themself" do
+      before (:each) do
+        User.delete_all
+        @follower = FactoryGirl.create(:user)
+        @followee = FactoryGirl.create(:user)
+      end
+
+      it "should make the user its own and only follower" do
+        expect(@follower.followers).to eq([@follower])
+      end
+
+      it "should make the user its own and only followee" do
+        expect(@follower.followees).to eq([@follower])
+      end
+    end
   end
 
   context "when following" do
     before (:each) do
+      User.delete_all
       @follower = FactoryGirl.create(:user)
       @followee = FactoryGirl.create(:user)
     end
@@ -101,9 +113,12 @@ RSpec.describe User, type: :model do
     end
 
 # NOTE: this is a test of the followers method -- refactor elsewhere? (what is best practice here?)
-#     it "should add the User to the followee's follower list" do
-#
-#     end
+    it "should add the User to the followee's follower list" do
+      expect(@followee.followers.size).to eq(1) #self only
+      @follower.follow(@followee)
+      expect(@followee.followers.size).to eq(2) #new follower added
+      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id])) #order
+    end
 
 
 
