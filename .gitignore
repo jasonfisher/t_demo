@@ -15,3 +15,13 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Personal developer notes
+./demo_notes*
+
+# Ignore rubymine workspace
+.idea/workspace.xml
+
+# Gemfile.lock will be generated everytime you do bundle and should remain on local machine not in version control
+Gemfile.lock
+
