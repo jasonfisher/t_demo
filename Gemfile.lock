@@ -166,6 +166,8 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    validates_email_format_of (1.6.3)
+      i18n
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.2.1)
@@ -181,7 +183,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise
-  factory_girl_rails (~> 4.5)
+  factory_girl_rails (~> 4.0)
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
@@ -193,4 +195,5 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+  validates_email_format_of
   web-console (~> 2.0)
