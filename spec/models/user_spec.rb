@@ -66,22 +66,37 @@ RSpec.describe User, type: :model do
   end
 
   context "when following another user" do
+    before (:each) do
+      @follower = FactoryGirl.create(:user)
+      @followee = FactoryGirl.create(:user)
+    end
 
-    it "should validate uniqueness of follow relationship"
+    it "should return the newly-created Following" do
+      expect(@follower.follow(@followee)).to eq(Following.where(["follower_id = ? and followee_id = ?", @follower.id, @followee.id]).first)
+    end
 
-    it "should create a Following"
+    it "should return true from follows? method" do
 
-    it "its followees should include the newly-followed User"
+    end
 
-    it "the followed User's followers should include the newly-following User"
+    it "should validate uniqueness of follow relationship" do
+    end
 
+    # it "should create a Following"
+    #
+    # it "its followees should include the newly-followed User"
+    #
+    # it "the followed User's followers should include the newly-following User"
+    #
 
   end
 
-  context "when un-following another user" do
-    it "should not let a User un-follow themself"
-
-    it "should validate the Following already exists"
-  end
+  # context "when un-following another user" do
+  #   it "should not let a User un-follow themself"
+  #
+  #   it "should validate the Following already exists"
+  #
+  #   it "should return false from follows? method"
+  # end
 
 end

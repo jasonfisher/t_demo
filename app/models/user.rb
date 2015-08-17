@@ -22,17 +22,15 @@ class User < ActiveRecord::Base
   after_create :follow_self
 
   def follow_self
-    follow(self.id)
+    follow(self)
   end
 
-  def follow(other_user_id)
-    new_following = Following.new(:follower_id => self.id, :followee_id => other_user_id)
-    logger.debug "created new following: #{new_following}"
-    new_following.save!
+  def follow(other_user)
+    Following.create(:follower_id => self.id, :followee_id => other_user.id)
   end
 
   def follows?(user_id)
-    following = Following.find(:follower_id => self.id, :followee_id => user_id)
+    following = Following.find(:follower_id => @self.id, :followee_id => user_id)
     return following ? true : false
   end
 
