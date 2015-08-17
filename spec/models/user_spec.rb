@@ -62,7 +62,15 @@ RSpec.describe User, type: :model do
       expect(Following.count).to eq(1)
       expect(Following.first.followee_id).to eq(@user_1.id)
       expect(Following.first.follower_id).to eq(@user_1.id)
-     end
+    end
+
+  #   it "should make the user its own and only follower" do
+  #     expect(@follower.followers).to eq(@follower)
+  #   end
+  #
+  #   it "should make the user its own and only followee" do
+  #     expect(@follower.followees).to eq(@follower)
+  #
   end
 
   context "when following" do
@@ -86,15 +94,18 @@ RSpec.describe User, type: :model do
     # see NOTES at bottom of page about ActiveModel::Relation vs [User] types
     # NOTE: this is a test of the followees method -- refactor elsewhere? (what is best practice here?)
     it "should add the new User to followees return value" do
-      expect(followees.size).to eq(1) #self only
+      expect(@follower.followees.size).to eq(1) #self only
       @follower.follow(@followee)
-      followees = @follower.followees
-      expect(followees.size).to eq(2) #self and new followee
-      expect(followees).to eq(User.find([@follower.id, @followee.id]))
+      expect(@follower.followees.size).to eq(2) #self and new followee
+      expect(@follower.followees).to eq(User.find([@follower.id, @followee.id]))
     end
 
-    # it "the followed User's followers should include the newly-following User"
-    #
+# NOTE: this is a test of the followers method -- refactor elsewhere? (what is best practice here?)
+#     it "should add the User to the followee's follower list" do
+#
+#     end
+
+
 
     #NOTE: don't create and test this until we have need for it in the code!
     # it "should return true from follows? method" do
