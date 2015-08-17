@@ -65,4 +65,23 @@ RSpec.describe User, type: :model do
      end
   end
 
+  context "when following another user" do
+
+    it "should validate uniqueness of follow relationship"
+
+    it "should create a Following"
+
+    it "its followees should include the newly-followed User"
+
+    it "the followed User's followers should include the newly-following User"
+
+
+  end
+
+  context "when un-following another user" do
+    it "should not let a User un-follow themself"
+
+    it "should validate the Following already exists"
+  end
+
 end
