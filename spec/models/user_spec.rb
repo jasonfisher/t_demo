@@ -105,22 +105,17 @@ RSpec.describe User, type: :model do
     # see NOTES at bottom of page about ActiveModel::Relation vs [User] types
     # NOTE: this is a test of the followees method -- refactor elsewhere? (what is best practice here?)
     it "should add the new User to followees return value" do
-      expect(@follower.followees.size).to eq(1) #self only
       @follower.follow(@followee)
-      expect(@follower.followees.size).to eq(2) #self and new followee
       expect(@follower.followees).to eq(User.find([@follower.id, @followee.id]))
     end
 
-# NOTE: this is a test of the followers method -- refactor elsewhere? (what is best practice here?)
     it "should add the User to the followee's follower list" do
-      expect(@followee.followers.size).to eq(1) #self only
       @follower.follow(@followee)
-      expect(@followee.followers.size).to eq(2) #new follower added
       expect(@followee.followers).to eq(User.find([@followee.id, @follower.id])) #order
     end
 
-    #NOTE: don't create and test this until we have need for it in the code!
-    # it "should return true from follows? method"
+    it "should return true from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
+
 
   end
 
@@ -133,20 +128,15 @@ RSpec.describe User, type: :model do
     end
 
     it "should return a full, ordered list of all followees" do
-      expect(@follower.followees.size).to eq(1) #self only
       @follower.follow(@followee_1)
       @follower.follow(@followee_2)
-
-      expect(@follower.followees.size).to eq(3)
       expect(@follower.followees).to eq(User.find([@follower.id, @followee_1.id, @followee_2.id])) #order
     end
 
     it "should return a full, ordered list of all followers" do
       @follower_2 = FactoryGirl.create(:user)
-      expect(@followee_1.followers.size).to eq(1)
       @follower.follow(@followee_1)
       @follower_2.follow(@followee_1)
-      expect(@followee_1.followers.size).to eq(3)
       expect(@followee_1.followers).to eq(User.find([@followee_1.id, @follower.id, @follower_2.id]))
     end
 
