@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :followings
   has_many :followees, :through => :followings, :foreign_key => :followee_id, :class_name => 'User'
   has_many :followers, :through => :followings, :foreign_key => :follower_id, :class_name => 'User'
+  has_many :tweets
 
   validates :username,
             :presence => true,
@@ -17,7 +18,6 @@ class User < ActiveRecord::Base
             }
   #NOTE: gem validates_email_format_of also checks for presence, and for uniqueness (case insensitive)
   validates_email_format_of :email, :message => 'does not look like a valid email address'
-
 
   after_create :follow_self
 
