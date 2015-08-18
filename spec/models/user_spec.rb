@@ -84,7 +84,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context "when following" do
+#TODO / NOTE: these are tests of the intertwined User and Following models; what is a better way to handle this?
+  context "when following another User" do
     before (:each) do
       User.delete_all
       @follower = FactoryGirl.create(:user)
@@ -92,12 +93,10 @@ RSpec.describe User, type: :model do
     end
 
     it "should create and return a new Following" do
-      #NOTE: refactor to better AR usage here
+#TODO: refactor to better AR usage here? (and elsewhere)
       expect(@follower.follow(@followee)).to eq(Following.where(["follower_id = ? and followee_id = ?", @follower.id, @followee.id]).first)
     end
 
-
-#NOTE: with intertwined models what is the best way to handle this? (error creation at Following level bubbled up through follow method)
     it "should validate uniqueness of follow relationship" do
       @follower.follow(@followee)
       expect(@follower.follow(@followee).errors[:follower_id]).to include("already following that user")
@@ -120,12 +119,36 @@ RSpec.describe User, type: :model do
       expect(@followee.followers).to eq(User.find([@followee.id, @follower.id])) #order
     end
 
-
-
     #NOTE: don't create and test this until we have need for it in the code!
-    # it "should return true from follows? method" do
-    #
-    # end
+    # it "should return true from follows? method"
+
+  end
+
+  context "when following multiple users" do
+    before (:each) do
+      User.delete_all
+      @follower = FactoryGirl.create(:user)
+      @followee_1 = FactoryGirl.create(:user)
+      @followee_2 = FactoryGirl.create(:user)
+    end
+
+    it "should return a full, ordered list of all followees" do
+      expect(@follower.followees.size).to eq(1) #self only
+      @follower.follow(@followee_1)
+      @follower.follow(@followee_2)
+
+      expect(@follower.followees.size).to eq(3)
+      expect(@follower.followees).to eq(User.find([@follower.id, @followee_1.id, @followee_2.id])) #order
+    end
+
+    it "should return a full, ordered list of all followers" do
+      @follower_2 = FactoryGirl.create(:user)
+      expect(@followee_1.followers.size).to eq(1)
+      @follower.follow(@followee_1)
+      @follower_2.follow(@followee_1)
+      expect(@followee_1.followers.size).to eq(3)
+      expect(@followee_1.followers).to eq(User.find([@followee_1.id, @follower.id, @follower_2.id]))
+    end
 
   end
 
