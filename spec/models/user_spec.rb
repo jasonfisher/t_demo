@@ -115,7 +115,6 @@ RSpec.describe User, type: :model do
 
     it "should return true from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
 
-
   end
 
   context "when following multiple users" do
@@ -143,19 +142,33 @@ RSpec.describe User, type: :model do
 
   context "when un-following" do
     before(:each) do
-      @user_2 = FactoryGirl.create(:user)
+      @follower = FactoryGirl.create(:user)
+      @followee = FactoryGirl.create(:user)
     end
 
     it "should validate the Following already exists" do
-      expect{ (@user_1.unfollow(@user_2)) }.to raise_error(RuntimeError, "not following that user")
+      expect{ (@follower.unfollow(@followee)) }.to raise_error(RuntimeError, "not following that user")
     end
 
     it "should not let a User un-follow themselves" do
-      expect{ (@user_1.unfollow(@user_1)) }.to raise_error(RuntimeError, "can not unfollow yourself")
+      expect{ (@follower.unfollow(@follower)) }.to raise_error(RuntimeError, "can not unfollow yourself")
     end
 
+    it "should remove the follower from the followee's list of followers" do
+      @follower.follow(@followee)
+      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
+      @follower.unfollow(@followee)
+      expect(@followee.followers).to eq(User.find([@followee.id]))
+    end
 
-    it "should return false from follows? method"
+    it "should remove the followee from the follower's list of followees" do
+      @follower.follow(@followee)
+      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
+      @follower.unfollow(@followee)
+      expect(@follower.followees).to eq(User.find([@follower.id]))
+    end
+
+    it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
 end

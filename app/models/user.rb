@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     raise "can not unfollow yourself" if (self.id == other_user.id)
     following = Following.where(["follower_id = ? and followee_id = ?", self.id, other_user.id])
     raise "not following that user" if following.empty?
-    following.destroy
+    Following.destroy(following)
     true
   end
 
