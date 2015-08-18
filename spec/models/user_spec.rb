@@ -171,6 +171,15 @@ RSpec.describe User, type: :model do
     it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
+  it "should return a list of all unfollowed users" do
+    @user_1 = FactoryGirl.create(:user)
+    @user_2 = FactoryGirl.create(:user)
+    @user_3 = FactoryGirl.create(:user)
+    @user_4 = FactoryGirl.create(:user)
+    @user_1.follow(@user_2)
+    expect(@user_1.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
+  end
+
 end
 
 #  NOTES ABOUT ACTIVERELATION VS AR OBJECT ISSUES

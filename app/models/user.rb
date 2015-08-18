@@ -53,10 +53,14 @@ class User < ActiveRecord::Base
     ret_val
   end
 
-  def follows?(user_id)
-    following = Following.find(:follower_id => @self.id, :followee_id => user_id)
-    return following ? true : false
+  def unfollowed_users
+    User.all - followees
   end
+
+  # def follows?(user_id)
+  #   following = Following.find(:follower_id => @self.id, :followee_id => user_id)
+  #   return following ? true : false
+  # end
 
 private
   def follow_self
