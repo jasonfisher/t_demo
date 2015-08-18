@@ -25,10 +25,17 @@ class User < ActiveRecord::Base
     Following.create(:follower_id => self.id, :followee_id => other_user.id)
   end
 
-  # NOTE: followers and followees methods should optimally also be cleaned up with detangling of User and Following models in the future
+  def unfollow(other_user)
+    raise "can not unfollow yourself" if (self.id == other_user.id)
+    following = Following.where(["follower_id = ? and followee_id = ?", self.id, other_user.id])
+    raise "not following that user" if following.empty?
+    following.destroy
+    true
+  end
+
+  #TODO! REFACTOR: followers and followees are N+1 query situation that needs eager loading fixes;
+  # (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
   def followers
-#TODO! REFACTOR: this is an N+1 query situation that needs eager loading to fix it;
-# (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
     follower_ids = Following.where(:followee_id => self.id).order(:follower_id).pluck(:follower_id)
     ret_val = []
     follower_ids.each do |follower_id|
@@ -37,9 +44,7 @@ class User < ActiveRecord::Base
     ret_val
   end
 
-  # NOTE: this should optimally also be cleaned up with detangling of User and Following models in the future
   def followees
-#TODO! REFACTOR: this is an N+1 query situation that needs eager loading to fix it;
     followee_ids = Following.where(:follower_id => self.id).order(:followee_id).pluck(:followee_id)
     ret_val = []
     followee_ids.each do |followee_id|

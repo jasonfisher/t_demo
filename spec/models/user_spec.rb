@@ -85,6 +85,7 @@ RSpec.describe User, type: :model do
   end
 
 #TODO / NOTE: these are tests of the intertwined User and Following models; what is a better way to handle this?
+#TODO: refactor to better AR usages for eq/rhs ?
   context "when following another User" do
     before (:each) do
       User.delete_all
@@ -93,7 +94,6 @@ RSpec.describe User, type: :model do
     end
 
     it "should create and return a new Following" do
-#TODO: refactor to better AR usage here? (and elsewhere)
       expect(@follower.follow(@followee)).to eq(Following.where(["follower_id = ? and followee_id = ?", @follower.id, @followee.id]).first)
     end
 
@@ -103,7 +103,6 @@ RSpec.describe User, type: :model do
     end
 
     # see NOTES at bottom of page about ActiveModel::Relation vs [User] types
-    # NOTE: this is a test of the followees method -- refactor elsewhere? (what is best practice here?)
     it "should add the new User to followees return value" do
       @follower.follow(@followee)
       expect(@follower.followees).to eq(User.find([@follower.id, @followee.id]))
@@ -143,9 +142,18 @@ RSpec.describe User, type: :model do
   end
 
   context "when un-following" do
-    it "should not let a User un-follow themselves"
+    before(:each) do
+      @user_2 = FactoryGirl.create(:user)
+    end
 
-    it "should validate the Following already exists"
+    it "should validate the Following already exists" do
+      expect{ (@user_1.unfollow(@user_2)) }.to raise_error(RuntimeError, "not following that user")
+    end
+
+    it "should not let a User un-follow themselves" do
+      expect{ (@user_1.unfollow(@user_1)) }.to raise_error(RuntimeError, "can not unfollow yourself")
+    end
+
 
     it "should return false from follows? method"
   end
