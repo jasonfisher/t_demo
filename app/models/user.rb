@@ -22,8 +22,14 @@ class User < ActiveRecord::Base
   after_create :follow_self
 
   def follow(other_user)
-    Following.create(:follower_id => self.id, :followee_id => other_user.id)
+    following = Following.create(:follower_id => self.id, :followee_id => other_user.id)
+    if following.valid?
+      return true
+    else
+      raise following.errors.messages.values.join('\n')
+    end
   end
+
 
   def unfollow(other_user)
     raise "can not unfollow yourself" if (self.id == other_user.id)

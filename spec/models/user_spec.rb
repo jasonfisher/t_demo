@@ -78,8 +78,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-#TODO / NOTE: these are tests of the intertwined User and Following models; what is a better way to handle this?
-#TODO: refactor to better AR usages for eq/rhs ?
   context "when following another User" do
     before (:each) do
       User.delete_all
@@ -87,46 +85,46 @@ RSpec.describe User, type: :model do
       @followee = FactoryGirl.create(:user)
     end
 
-    it "should create and return a new Following" do
-      expect(@follower.follow(@followee)).to eq(Following.where(["follower_id = ? and followee_id = ?", @follower.id, @followee.id]).first)
-    end
-
-    it "should validate uniqueness of follow relationship" do
+    it "should validate uniqueness of the follow relationship" do
       @follower.follow(@followee)
-      expect(@follower.follow(@followee).errors[:follower_id]).to include("already following that user")
+      expect{ (@follower.follow(@followee)) }.to raise_error(RuntimeError, "already following that user")
     end
 
-    # see NOTES at bottom of page about ActiveModel::Relation vs [User] types
-    it "should add the new User to followees return value" do
+    it "should return true if parameters are valid" do
+      expect(@follower.follow(@followee)).to be true
+    end
+
+    it "should add the new User to followees list" do
       @follower.follow(@followee)
       expect(@follower.followees).to eq(User.find([@follower.id, @followee.id]))
     end
 
-    it "should add the User to the followee's follower list" do
+    it "should add the User to followee's follower list" do
       @follower.follow(@followee)
-      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id])) #order
+      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
     end
 
     it "should return true from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
 
-  end
+    end
+
 
   context "when following multiple users" do
     before (:each) do
       User.delete_all
-      @follower = FactoryGirl.create(:user)
-      @followee_1 = FactoryGirl.create(:user)
-      @followee_2 = FactoryGirl.create(:user)
+      @follower   = create(:user)
+      @followee_1 = create(:user)
+      @followee_2 = create(:user)
     end
 
-    it "should return a full, ordered list of all followees" do
+    it "should return an ordered list of all followees" do
       @follower.follow(@followee_1)
       @follower.follow(@followee_2)
       expect(@follower.followees).to eq(User.find([@follower.id, @followee_1.id, @followee_2.id])) #order
     end
 
-    it "should return a full, ordered list of all followers" do
-      @follower_2 = FactoryGirl.create(:user)
+    it "should return an ordered list of all followers" do
+      @follower_2 = create(:user)
       @follower.follow(@followee_1)
       @follower_2.follow(@followee_1)
       expect(@followee_1.followers).to eq(User.find([@followee_1.id, @follower.id, @follower_2.id]))
