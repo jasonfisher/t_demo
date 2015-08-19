@@ -3,84 +3,78 @@ require 'factory_girl'
 
 RSpec.describe User, type: :model do
 
-  before(:each) do
-    User.delete_all
-    @user_1 = FactoryGirl.build(:user)
-
+  it "has a valid factory" do
+    user = create(:user)
+    expect(user).to be_valid
   end
 
 #TODO: how to test user creation with confirm_password when that is handled within the devise gem?
 
   context "when creating a user" do
-
     before(:each) do
-      Following.delete_all
+      @user = build(:user)
     end
 
-    it "fails validation with no username" do
-     expect(User.create(:username => nil).errors[:username].size).to eq(1)
-     expect(User.create(:username => nil).errors[:username]).to include("can't be blank")
-    end
-
-    it "validates uniqueness of usernames" do
-      @user_1.save!
-      expect(User.create(:username => @user_1.username).errors[:username].size).to eq(1)
-      expect(User.create(:username => @user_1.username).errors[:username]).to include("has already been taken")
-    end
-
-    it "fails validation with no password" do
-      expect(User.create(:password => nil).errors[:password].size).to eq(1)
-      expect(User.create(:password => nil).errors[:password]).to include("can't be blank")
-    end
-
-    it "fails validation with no email" do
-      expect(User.create(:email => nil).errors[:email].size).to eq(2)
-      expect(User.create(:email => nil).errors[:email]).to include("can't be blank")
-      expect(User.create(:email => nil).errors[:email]).to include("does not look like a valid email address")
-    end
-
-    it "should validate format of email address" do
-      expect(User.create(:email => "invalidaddress@invalid").errors[:email].size).to eq(2)
-      expect(User.create(:email => "invalidaddress@invalid").errors[:email]).to include("is invalid") #would prefer only 1 error message but this is existing behavior
-      expect(User.create(:email => "invalidaddress@invalid").errors[:email]).to include("does not look like a valid email address")
-    end
-
-    it "should validate uniqueness of email address" do
-      @user_1.save!
-      expect(User.create(:email => @user_1.email).errors[:email].size).to eq(1)
-      expect(User.create(:email => @user_1.email).errors[:email]).to include("has already been taken")
-    end
-
-    it "should be case-insensitive when validating uniqueness of email address" do
-      @user_1.save!
-      expect(User.create(:email => @user_1.email.upcase).errors[:email].size).to eq(1)
-      expect(User.create(:email => @user_1.email.upcase).errors[:email]).to include("has already been taken")
-    end
-
-#surely there is a more elegant way to test this but I think suffices to prove the point
-    it "should automatically create a following of itself upon creation" do
-      expect(Following.count).to eq(0)
-      @user_1.save!
-      expect(Following.count).to eq(1)
-      expect(Following.first.followee_id).to eq(@user_1.id)
-      expect(Following.first.follower_id).to eq(@user_1.id)
-    end
-
-#TODO: obvious case for refactor of some sort here
-    context "when User automatically follows themself" do
-      before (:each) do
-        User.delete_all
-        @follower = FactoryGirl.create(:user)
-        @followee = FactoryGirl.create(:user)
+    context "with invalid parameters" do
+      it "validates the presence of username" do
+       expect(User.create(:username => nil).errors[:username].size).to eq(1)
+       expect(User.create(:username => nil).errors[:username]).to include("can't be blank")
       end
 
-      it "should make the user its own and only follower" do
-        expect(@follower.followers).to eq([@follower])
+      it "validates uniqueness of username" do
+        @user.save!
+        expect(User.create(:username => @user.username).errors[:username].size).to eq(1)
+        expect(User.create(:username => @user.username).errors[:username]).to include("has already been taken")
       end
 
-      it "should make the user its own and only followee" do
-        expect(@follower.followees).to eq([@follower])
+      it "validates the presence of password" do
+        expect(User.create(:password => nil).errors[:password].size).to eq(1)
+        expect(User.create(:password => nil).errors[:password]).to include("can't be blank")
       end
+
+      it "validates the presence of email" do
+        expect(User.create(:email => nil).errors[:email].size).to eq(2)
+        expect(User.create(:email => nil).errors[:email]).to include("can't be blank")
+        expect(User.create(:email => nil).errors[:email]).to include("does not look like a valid email address")
+      end
+
+      it "validates the format of email address" do
+        expect(User.create(:email => "invalidaddress@invalid").errors[:email].size).to eq(2)
+        expect(User.create(:email => "invalidaddress@invalid").errors[:email]).to include("is invalid") #would prefer only 1 error message but this is existing behavior
+        expect(User.create(:email => "invalidaddress@invalid").errors[:email]).to include("does not look like a valid email address")
+      end
+
+      it "validate uniqueness of email address" do
+        @user.save!
+        expect(User.create(:email => @user.email).errors[:email].size).to eq(1)
+        expect(User.create(:email => @user.email).errors[:email]).to include("has already been taken")
+      end
+
+      it "is case-insensitive when validating uniqueness of email address" do
+        @user.save!
+        expect(User.create(:email => @user.email.upcase).errors[:email].size).to eq(1)
+        expect(User.create(:email => @user.email.upcase).errors[:email]).to include("has already been taken")
+      end
+    end
+
+    context "with valid parameters" do
+      it "makes the User follow themself" do
+        @user.save!
+        expect(@user.followers).to eq([@user])
+      end
+
+      it "does not make the new User follow other users" do
+        user_2 = build(:user)
+        @user.save!
+        expect(@user.followers).to eq([@user])
+      end
+
+      it "does not make other Users follow the user" do
+        user_2 = build(:user)
+        @user.save!
+        expect(@user.followees).to eq([@user])
+      end
+
     end
   end
 
@@ -172,12 +166,12 @@ RSpec.describe User, type: :model do
   end
 
   it "should return a list of all unfollowed users" do
-    @user_1 = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
     @user_2 = FactoryGirl.create(:user)
     @user_3 = FactoryGirl.create(:user)
     @user_4 = FactoryGirl.create(:user)
-    @user_1.follow(@user_2)
-    expect(@user_1.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
+    @user.follow(@user_2)
+    expect(@user.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
   end
 
 end
