@@ -108,7 +108,6 @@ RSpec.describe User, type: :model do
 
     end
 
-
   context "when following multiple users" do
     before (:each) do
       User.delete_all
@@ -163,13 +162,16 @@ RSpec.describe User, type: :model do
     it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
-  it "should return an ordered list of all unfollowed users" do
-    @user = FactoryGirl.create(:user)
-    @user_2 = FactoryGirl.create(:user)
-    @user_3 = FactoryGirl.create(:user)
-    @user_4 = FactoryGirl.create(:user)
-    @user.follow(@user_2)
-    expect(@user.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
+  context "when calling unfollowed users" do
+    it "should return an ordered list of all unfollowed users" do
+      @user = FactoryGirl.create(:user)
+      @user_2 = FactoryGirl.create(:user)
+      @user_3 = FactoryGirl.create(:user)
+      @user_4 = FactoryGirl.create(:user)
+      @user.follow(@user_2)
+      expect(@user.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
+    end
+
   end
 
 end
