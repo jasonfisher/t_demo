@@ -163,7 +163,7 @@ RSpec.describe User, type: :model do
     it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
-  it "should return a list of all unfollowed users" do
+  it "should return an ordered list of all unfollowed users" do
     @user = FactoryGirl.create(:user)
     @user_2 = FactoryGirl.create(:user)
     @user_3 = FactoryGirl.create(:user)
