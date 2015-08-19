@@ -24,37 +24,13 @@ RSpec.describe Tweet, type: :model do
       end
     end
 
-#TODO: this section is awkward and/or unnecessary
-    context "with valid parameters" do
-      it "should return the creating User" do
-        @tweet = create(:tweet)
-        expect(@tweet.user.class.name).to eq("User")
-      end
+  end
 
-      it "should return its content" do
-        @user = create(:user)
-        content_string = "here is some content!"
-        tweet = Tweet.create(:user_id => @user.id, :content => content_string)
-        expect(tweet.content).to eq(content_string)
-      end
-
-      it "should return its created_at time" do
-        tweet = create(:tweet)
-        expect(tweet.created_at.class.name).to eq("Time")
-      end
-
+  context "if update is called on a tweet" do
+    before (:each) do
+      @tweet = create(:tweet)
     end
-
-  end
-
-  context "when deleting a tweet" do
-    it "should remove the tweet from the database"
-
-    it "should remove the tweet from the list returned by get_tweets"
-  end
-
-  context "update is called on a tweet" do
-    it "should not allow the user_id to be changed"
+    it "should not allow the user_id to be changed" 
 
     it "should not allow the created_at time to be changed"
 

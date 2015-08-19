@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   def unfollow(other_user)
     raise "can not unfollow yourself" if (self.id == other_user.id)
-#NOTE: ActiveRecord::Relation might be returning > 1 value if that was somehow created in the database but we are trusting that is not the case cuz of tweet validations  
+#NOTE: ActiveRecord::Relation might be returning > 1 value if that was somehow created in the database but we are trusting that is not the case cuz of tweet validations
     following = Following.where(["follower_id = ? and followed_id = ?", self.id, other_user.id]).first
     raise "not following that user" if following.nil?
     Following.delete(following.id)
