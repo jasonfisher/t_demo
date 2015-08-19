@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :followings
-  has_many :followees, :through => :followings, :foreign_key => :followee_id, :class_name => 'User'
+  has_many :followeds, :through => :followings, :foreign_key => :followed_id, :class_name => 'User'
   has_many :followers, :through => :followings, :foreign_key => :follower_id, :class_name => 'User'
   has_many :tweets
 
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   after_create :follow_self
 
   def follow(other_user)
-    following = Following.create(:follower_id => self.id, :followee_id => other_user.id)
+    following = Following.create(:follower_id => self.id, :followed_id => other_user.id)
     if following.valid?
       return true
     else
@@ -33,16 +33,16 @@ class User < ActiveRecord::Base
 
   def unfollow(other_user)
     raise "can not unfollow yourself" if (self.id == other_user.id)
-    following = Following.where(["follower_id = ? and followee_id = ?", self.id, other_user.id])
+    following = Following.where(["follower_id = ? and followed_id = ?", self.id, other_user.id])
     raise "not following that user" if following.empty?
     Following.destroy(following)
     true
   end
 
-  #TODO! REFACTOR: followers and followees are N+1 query situation that needs eager loading fixes;
+  #TODO! REFACTOR: followers and followeds are N+1 query situation that needs eager loading fixes;
   # (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
   def followers
-    follower_ids = Following.where(:followee_id => self.id).order(:follower_id).pluck(:follower_id)
+    follower_ids = Following.where(:followed_id => self.id).order(:follower_id).pluck(:follower_id)
     ret_val = []
     follower_ids.each do |follower_id|
       ret_val << User.find(follower_id)
@@ -50,21 +50,21 @@ class User < ActiveRecord::Base
     ret_val
   end
 
-  def followees
-    followee_ids = Following.where(:follower_id => self.id).order(:followee_id).pluck(:followee_id)
+  def followeds
+    followed_ids = Following.where(:follower_id => self.id).order(:followed_id).pluck(:followed_id)
     ret_val = []
-    followee_ids.each do |followee_id|
-      ret_val << User.find(followee_id)
+    followed_ids.each do |followed_id|
+      ret_val << User.find(followed_id)
     end
     ret_val
   end
 
   def unfollowed_users
-    User.all - followees
+    User.all - followeds
   end
 
   # def follows?(user_id)
-  #   following = Following.find(:follower_id => @self.id, :followee_id => user_id)
+  #   following = Following.find(:follower_id => @self.id, :followed_id => user_id)
   #   return following ? true : false
   # end
 

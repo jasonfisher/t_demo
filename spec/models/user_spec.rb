@@ -72,7 +72,7 @@ RSpec.describe User, type: :model do
       it "does not make other Users follow the user" do
         user_2 = build(:user)
         @user.save!
-        expect(@user.followees).to eq([@user])
+        expect(@user.followeds).to eq([@user])
       end
 
     end
@@ -82,26 +82,26 @@ RSpec.describe User, type: :model do
     before (:each) do
       User.delete_all
       @follower = FactoryGirl.create(:user)
-      @followee = FactoryGirl.create(:user)
+      @followed = FactoryGirl.create(:user)
     end
 
     it "should validate uniqueness of the follow relationship" do
-      @follower.follow(@followee)
-      expect{ (@follower.follow(@followee)) }.to raise_error(RuntimeError, "already following that user")
+      @follower.follow(@followed)
+      expect{ (@follower.follow(@followed)) }.to raise_error(RuntimeError, "already following that user")
     end
 
     it "should return true if parameters are valid" do
-      expect(@follower.follow(@followee)).to be true
+      expect(@follower.follow(@followed)).to be true
     end
 
-    it "should add the new User to followees list" do
-      @follower.follow(@followee)
-      expect(@follower.followees).to eq(User.find([@follower.id, @followee.id]))
+    it "should add the new User to followeds list" do
+      @follower.follow(@followed)
+      expect(@follower.followeds).to eq(User.find([@follower.id, @followed.id]))
     end
 
-    it "should add the User to followee's follower list" do
-      @follower.follow(@followee)
-      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
+    it "should add the User to followed's follower list" do
+      @follower.follow(@followed)
+      expect(@followed.followers).to eq(User.find([@followed.id, @follower.id]))
     end
 
     it "should return true from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
@@ -113,21 +113,21 @@ RSpec.describe User, type: :model do
     before (:each) do
       User.delete_all
       @follower   = create(:user)
-      @followee_1 = create(:user)
-      @followee_2 = create(:user)
+      @followed_1 = create(:user)
+      @followed_2 = create(:user)
     end
 
-    it "should return an ordered list of all followees" do
-      @follower.follow(@followee_1)
-      @follower.follow(@followee_2)
-      expect(@follower.followees).to eq(User.find([@follower.id, @followee_1.id, @followee_2.id])) #order
+    it "should return an ordered list of all followeds" do
+      @follower.follow(@followed_1)
+      @follower.follow(@followed_2)
+      expect(@follower.followeds).to eq(User.find([@follower.id, @followed_1.id, @followed_2.id])) #order
     end
 
     it "should return an ordered list of all followers" do
       @follower_2 = create(:user)
-      @follower.follow(@followee_1)
-      @follower_2.follow(@followee_1)
-      expect(@followee_1.followers).to eq(User.find([@followee_1.id, @follower.id, @follower_2.id]))
+      @follower.follow(@followed_1)
+      @follower_2.follow(@followed_1)
+      expect(@followed_1.followers).to eq(User.find([@followed_1.id, @follower.id, @follower_2.id]))
     end
 
   end
@@ -135,29 +135,29 @@ RSpec.describe User, type: :model do
   context "when un-following" do
     before(:each) do
       @follower = FactoryGirl.create(:user)
-      @followee = FactoryGirl.create(:user)
+      @followed = FactoryGirl.create(:user)
     end
 
     it "should validate the Following already exists" do
-      expect{ (@follower.unfollow(@followee)) }.to raise_error(RuntimeError, "not following that user")
+      expect{ (@follower.unfollow(@followed)) }.to raise_error(RuntimeError, "not following that user")
     end
 
     it "should not let a User un-follow themselves" do
       expect{ (@follower.unfollow(@follower)) }.to raise_error(RuntimeError, "can not unfollow yourself")
     end
 
-    it "should remove the follower from the followee's list of followers" do
-      @follower.follow(@followee)
-      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
-      @follower.unfollow(@followee)
-      expect(@followee.followers).to eq(User.find([@followee.id]))
+    it "should remove the follower from the followed's list of followers" do
+      @follower.follow(@followed)
+      expect(@followed.followers).to eq(User.find([@followed.id, @follower.id]))
+      @follower.unfollow(@followed)
+      expect(@followed.followers).to eq(User.find([@followed.id]))
     end
 
-    it "should remove the followee from the follower's list of followees" do
-      @follower.follow(@followee)
-      expect(@followee.followers).to eq(User.find([@followee.id, @follower.id]))
-      @follower.unfollow(@followee)
-      expect(@follower.followees).to eq(User.find([@follower.id]))
+    it "should remove the followed from the follower's list of followeds" do
+      @follower.follow(@followed)
+      expect(@followed.followers).to eq(User.find([@followed.id, @follower.id]))
+      @follower.unfollow(@followed)
+      expect(@follower.followeds).to eq(User.find([@follower.id]))
     end
 
     it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
