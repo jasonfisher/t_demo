@@ -162,7 +162,7 @@ RSpec.describe User, type: :model do
     it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
-  context "when calling unfollowed users" do
+  context "when calling unfollowed_users" do
     it "should return an ordered list of all unfollowed users" do
       @user = create(:user)
       @user_2 = create(:user)
@@ -171,7 +171,49 @@ RSpec.describe User, type: :model do
       @user.follow(@user_2)
       expect(@user.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
     end
-
   end
 
-end
+  context "when creating tweets" do
+    before(:each) do
+      Tweet.delete_all
+      @user = create :user
+    end
+
+#TODO/NOTE: these validations aren't very DRY since the same checks are made in the tweet model itself,
+# but we want to verify that User returns a RuntimeError with the underlying validation error message
+
+    context "with invalid parameters" do
+      it "validates the presence of content" do
+        expect{ (@user.create_tweet(nil).errors[:content]) }.to raise_error(RuntimeError, "can't be blank")
+      end
+
+      it "validates the minimum length of the content" do
+        expect{ (@user.create_tweet("")) }.to raise_error(RuntimeError, "can't be blank")
+      end
+
+      it "validates the length of the content" do
+        long_string = "******************************************************************************************************************************************************"
+        expect(long_string.length).to eq(150)
+        expect{ (@user.create_tweet(long_string)) }.to raise_error(RuntimeError, "is too long (maximum is 144 characters)")
+      end
+    end #context
+
+    context "with valid parameters" do
+      it "returns the new tweet" do
+        expect(@user.create_tweet("I just tweeted!")).to eq(Tweet.where(:user_id => @user.id).last)
+      end
+
+      it "adds a tweet to the user's list of tweets" do
+        expect(@user.get_all_tweets).to eq([])
+        @user.create_tweet("I just tweeted!")
+        expect(@user.get_all_tweets).to eq([Tweet.find_by_user_id(@user.id)])
+        #TEST MULTIPLE TWEETS IN SAME TEST TO KEEP DRY
+        @user.create_tweet("I just tweeted again!")
+        expect(@user.get_all_tweets).to eq(Tweet.where(:user_id => @user.id).order(:user_id).to_a)
+      end
+    end
+  end #context
+
+  context "when deleting tweets"    #implement IFF we add delete to interface
+
+end #whole spec

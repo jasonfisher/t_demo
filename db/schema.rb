@@ -13,13 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150818213109) do
 
-  create_table "followers", force: :cascade do |t|
-    t.integer  "follower_id", limit: 4
-    t.integer  "user_id",     limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
   create_table "followings", force: :cascade do |t|
     t.integer  "follower_id", limit: 4
     t.integer  "followed_id", limit: 4

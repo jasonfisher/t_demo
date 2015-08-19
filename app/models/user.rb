@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
     end
   end
 
-
   def unfollow(other_user)
     raise "can not unfollow yourself" if (self.id == other_user.id)
 #NOTE: ActiveRecord::Relation might be returning > 1 value if that was somehow created in the database but we are trusting that is not the case cuz of tweet validations
@@ -62,6 +61,19 @@ class User < ActiveRecord::Base
 
   def unfollowed_users
     User.all - followeds
+  end
+
+  def create_tweet(content)
+    tweet = Tweet.create(:user_id => self.id, :content => content)
+    if tweet.valid?
+      return tweet
+    else
+      raise tweet.errors.messages.values.join('\n')
+    end
+  end
+
+  def get_all_tweets
+    Tweet.where(:user_id => self.id).order(:user_id).to_a
   end
 
   # def follows?(user_id)
