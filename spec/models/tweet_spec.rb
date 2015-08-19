@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Tweet, type: :model do
   # before(:each) do
   #   Tweet.delete_all
-  #   @tweet = FactoryGirl.build(:tweet)
+  #   @tweet = build(:tweet)
   # end
 
   context "when creating a tweet" do
@@ -25,12 +25,12 @@ RSpec.describe Tweet, type: :model do
   end
 
   it "should return the creating User" do
-    @tweet = FactoryGirl.build(:tweet)
+    @tweet = build(:tweet)
     expect(@tweet.user.class.name).to eq("User")
   end
 
   it "should return its content" do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     content_string = "here is some content!"
     tweet = Tweet.create(:user_id => @user.id, :content => content_string)
     expect(tweet.content).to eq(content_string)

@@ -81,8 +81,8 @@ RSpec.describe User, type: :model do
   context "when following another User" do
     before (:each) do
       User.delete_all
-      @follower = FactoryGirl.create(:user)
-      @followed = FactoryGirl.create(:user)
+      @follower = create(:user)
+      @followed = create(:user)
     end
 
     it "should validate uniqueness of the follow relationship" do
@@ -133,8 +133,8 @@ RSpec.describe User, type: :model do
 
   context "when un-following" do
     before(:each) do
-      @follower = FactoryGirl.create(:user)
-      @followed = FactoryGirl.create(:user)
+      @follower = create(:user)
+      @followed = create(:user)
     end
 
     it "should validate the Following already exists" do
@@ -164,10 +164,10 @@ RSpec.describe User, type: :model do
 
   context "when calling unfollowed users" do
     it "should return an ordered list of all unfollowed users" do
-      @user = FactoryGirl.create(:user)
-      @user_2 = FactoryGirl.create(:user)
-      @user_3 = FactoryGirl.create(:user)
-      @user_4 = FactoryGirl.create(:user)
+      @user = create(:user)
+      @user_2 = create(:user)
+      @user_3 = create(:user)
+      @user_4 = create(:user)
       @user.follow(@user_2)
       expect(@user.unfollowed_users).to eq(User.find([@user_3.id, @user_4.id]))
     end
