@@ -7,29 +7,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    id = params[:id]
-
-    #set user to current_user if going to their own page, or to an invalid id
-    # (we want to not reward tinkering behavior with user ids that don't exist.. just send them to their own page)
-#TODO: refactor
-    @is_current_user = (id == current_user.id)
-    @user = @is_current_user ? current_user : User.find_by_id(id)
-    if @user.nil?
-      @user = current_user
-      @is_current_user = true
-    end
-
+    @user = get_user_or_current_user(params[:id])
   end
 
   def show_followers
-#TODO: handle error case where no such user
-    @user = User.find_by_id(params[:id])
+    @user = get_user_or_current_user(params[:id])
     @followers = @user.followers
   end
 
   def show_followeds
-#TODO: handle error case where no such user
-    @user = User.find_by_id(params[:id])
+    @user = get_user_or_current_user(params[:id])
     @followeds = @user.followeds
   end
 end
