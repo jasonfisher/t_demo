@@ -30,15 +30,23 @@ RSpec.describe Tweet, type: :model do
 
   end
 
+#NOTE: not sure about this whole section; while it's nice to know tweets can't be updated, did I really need this section?
   context "if update is called on a tweet" do
     before (:each) do
       @tweet = create(:tweet)
     end
-    it "should not allow the user_id to be changed"
+    it "should not allow the user_id to be changed" do
+      expect{ (@tweet.update(:user_id => @tweet.id + 1))} .to raise_error(RuntimeError, "tweets can not be updated")
+    end
 
-    it "should not allow the created_at time to be changed"
+    it "should not allow the created_at time to be changed" do
+      expect{ (@tweet.update(:created_at => Time.now))} .to raise_error(RuntimeError, "tweets can not be updated")
+    end
 
-    it "should not allow the content to be changed"
+    it "should not allow the content to be changed" do
+      expect{ (@tweet.update(:content => Time.now.to_s))} .to raise_error(RuntimeError, "tweets can not be updated")
+
+    end
 
   end
 end
