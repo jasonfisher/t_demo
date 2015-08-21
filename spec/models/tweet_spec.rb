@@ -23,7 +23,7 @@ RSpec.describe Tweet, type: :model do
 
       it "validates the maximum length of the content" do
         long_string = "******************************************************************************************************************************************************"
-        expect(long_string.length).to eq(150)
+        expect(long_string.length).to be > Tweet::MAX_TWEET_LENGTH
         expect(Tweet.create(:content => long_string).errors[:content]).to eq(["is too long (maximum is 144 characters)"])
       end
     end
