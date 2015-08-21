@@ -1,18 +1,17 @@
 Rails.application.routes.draw do
-  get 'users/self'
-
-  # get 'users/other'
-  #
-  # get 'users/all'
-  #
-  # get 'users/signout'
 
   devise_for :users
+
+  root to: 'users#home'
+  get '/users/show/:id' => 'users#show', :as => :show_user
+  get '/users/show_followers/:id' => 'users#show_followers', :as => :show_followers
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root to: 'users#self'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

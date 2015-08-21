@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  describe "GET #self" do
+  describe "GET #home" do
     it "returns http success"
     # do
     #   get :self
@@ -10,20 +10,12 @@ RSpec.describe UsersController, type: :controller do
     # end
   end
 
-  describe "GET #other" do
-    it "returns http success"
-    # do
-    #   get :other
-    #   expect(response).to have_http_status(:success)
-    # end
+  describe "GET #show" do
+    it "should do some stuff"
   end
 
-  describe "GET #all" do
-    it "returns http success"
-    # do
-    #   get :all
-    #   expect(response).to have_http_status(:success)
-    # end
+  describe "GET #show_followers" do
+    it "should do some stuff"
   end
 
 end

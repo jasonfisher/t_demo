@@ -26,3 +26,5 @@
 # Gemfile.lock will be generated everytime you do bundle and should remain on local machine not in version control
 Gemfile.lock
 
+# auto-created Mac OS files/folders
+.DS_*
