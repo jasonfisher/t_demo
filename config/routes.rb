@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: 'users#home'
   get '/users/show/:id' => 'users#show', :as => :show_user
   get '/users/show_followers/:id' => 'users#show_followers', :as => :show_followers
+  get '/users/show_followeds/:id' => 'users#show_followeds', :as => :show_followeds
 
 
 
