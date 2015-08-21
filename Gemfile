@@ -8,7 +8,9 @@ gem "mysql2" # Required for:  Ruby mysql connecter
 gem 'rake', '~>10.4'
 gem 'devise'
 gem 'validates_email_format_of'
+#TODO: should these be moved into :test section below?
 gem "factory_girl_rails", "~> 4.0"
+gem 'faker'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
