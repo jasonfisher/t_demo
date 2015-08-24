@@ -76,11 +76,6 @@ class User < ActiveRecord::Base
     Tweet.where(:user_id => self.id).order(:user_id).to_a
   end
 
-  # def follows?(user_id)
-  #   following = Following.find(:follower_id => @self.id, :followed_id => user_id)
-  #   return following ? true : false
-  # end
-
 private
   def follow_self
     follow(self)
