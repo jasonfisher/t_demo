@@ -1,21 +1,27 @@
 require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  describe "GET #home" do
-    it "returns http success"
-    # do
-    #   get :self
-    #   expect(response).to have_http_status(:success)
-    # end
-  end
+  describe "get :home" do
+    context "when user is not logged in" do
+      it "should redirect to login page " do
+        login_with nil
+        get :home
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
 
-  describe "GET #show" do
-    it "should do some stuff"
-  end
-
-  describe "GET #show_followers" do
-    it "should do some stuff"
+    context "when user is logged in" do
+      before(:each) do
+        @user = create(:user)
+        login_with @user
+      end
+      it "should redirect to user#show page for logged in user" do
+        get :home
+        expect(response).to redirect_to show_user_path(@user.id)
+      end
+    end
   end
 
 end
