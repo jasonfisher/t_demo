@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+#TODO: rename show_tweets, etc,  to just 'show'
   root to: 'users#home'
   get '/users/show/:id' => 'users#show', :as => :show_user
   get '/users/show_followers/:id' => 'users#show_followers', :as => :show_followers
