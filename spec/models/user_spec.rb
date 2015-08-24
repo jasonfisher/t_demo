@@ -103,10 +103,7 @@ RSpec.describe User, type: :model do
       @follower.follow(@followed)
       expect(@followed.followers).to eq(User.find([@followed.id, @follower.id]))
     end
-
-    it "should return true from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
-
-    end
+  end
 
   context "when following multiple users" do
     before (:each) do
@@ -128,7 +125,6 @@ RSpec.describe User, type: :model do
       @follower_2.follow(@followed_1)
       expect(@followed_1.followers).to eq(User.find([@followed_1.id, @follower.id, @follower_2.id]))
     end
-
   end
 
   context "when un-following" do
@@ -158,8 +154,6 @@ RSpec.describe User, type: :model do
       @follower.unfollow(@followed)
       expect(@follower.followeds).to eq(User.find([@follower.id]))
     end
-
-    it "should return false from follows? method"  #NOTE: don't create and test this until/unless we have need for it in the code!
   end
 
   context "when calling unfollowed_users" do
