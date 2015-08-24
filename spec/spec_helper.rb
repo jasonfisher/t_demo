@@ -18,10 +18,21 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'factory_girl_rails'
+require_relative 'support/controller_helpers'
+require 'devise'
+
 
 RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
+
+  #from http://willschenk.com/setting-up-testing/
+  config.include ControllerHelpers, type: :controller
+  Warden.test_mode!
+
+  config.after do
+    Warden.test_reset!
+  end
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
