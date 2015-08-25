@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
     true
   end
 
+#TODO: add fast query methods to get num followers and num followees
+
   #TODO! REFACTOR: followers and followeds are N+1 query situation that needs eager loading fixes;
   # (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
   def followers
