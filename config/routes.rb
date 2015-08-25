@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get '/users/show_followeds/:id' => 'users#show_followeds', :as => :show_followeds
   get '/users/show_tweets/:id'    => 'users#show_tweets',    :as => :show_tweets
   # get '/tweets/show_tweets/:id' => 'tweets#show_tweets', :as => :show_tweets
-
-  post '/tweets/create_tweet' => 'tweets#create_tweet', :as => :create_tweet
+  get '/tweets/new' => 'tweets#new'
+  post '/tweets/create' => 'tweets#create'
 
 
 
