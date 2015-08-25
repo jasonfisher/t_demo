@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+    div.logout_link {
+        text-align:right;
+        padding-right:20%;
+    }
+</style>
+  <link rel="stylesheet" href="styles.css">
   <title>TwitterDemo</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -8,9 +15,7 @@
 </head>
 <body>
 <% if user_signed_in? %>
-    <li>
-      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-    </li>
+      <div class="logout_link"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
 <% end %>
 
     <%= yield %>

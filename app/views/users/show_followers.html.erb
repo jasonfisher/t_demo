@@ -1,4 +1,18 @@
+<style>
+    div.follower_name {
+        background-color:blue;
+        color:white;
+        font-family:verdana;
+        font-weight:bold;
+        font-size:100%;
+    }
+    div.num_followers {
+    }
+</style>
+
 <% @followers.each do |follower| %>
-<p><%= follower.username %></p>
+<div class="username">Username: <%= follower.username %></div>
+<div class="num_followers">Following: <%= follower.followers.size %></div>
+<div class="num_followeds">Followed by: <%= follower.followeds.size %></div>
 <br>
 <% end %>

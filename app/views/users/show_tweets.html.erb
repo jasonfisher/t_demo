@@ -1,8 +1,40 @@
+<style>
+    div.tweeter {
+        background-color:white;
+        color:blue;
+        font-family:verdana;
+        font-weight:bold;
+        font-size:80%;
+    }
+    div.tweet_date {
+        background-color:white;
+        color:gray;
+        font-weight:lighter;
+        font-family:verdana;
+        font-size:65%;
+    }
+    div.tweet {
+        background-color:white;
+        color:black;
+        font-family:verdana;
+        font-size:100%;
+    }
+    div.tweeter_username {
+        background-color: white;
+        color:black;
+        font-family:verdana;
+        font-weight:bold;
+        font-size:150%;
+        text-align:center;
+    }
+</style>
+
+
+<div class="tweeter_username">Tweets by user: <%= @user.username %></div>
+<br><br>
 <% @tweets.each do |tweet| %>
-<p>
-<tr><td>Time tweeted</td><td>Tweet Content</td></tr>
-  <br>
-<tr><td><%= tweet.created_at %></td><td><%= tweet.content %></td></tr>
-</p>
+<div class="tweeter"> Tweeted by <%= tweet.user.username %> </div>
+<div class="tweet_date">Tweeted at: <%= tweet.created_at.strftime("%m %b %Y") %> </div>
+<div class="tweet">Tweet: <%= tweet.content %> </div>
 <br>
 <% end %>
