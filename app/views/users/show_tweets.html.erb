@@ -4,7 +4,7 @@
 <br><br>
 <% @tweets.each do |tweet| %>
 <div class="tweeter"> Tweeted by <%= tweet.user.username %> </div>
-<div class="tweet_date">Tweeted at: <%= tweet.created_at.strftime("%m %b %Y") %> </div>
+<div class="tweet_date">Tweeted at: <%= tweet.created_at.strftime("%m %b %Y,%l:%M%P") %> </div>
 <div class="tweet">Tweet: <%= tweet.content %> </div>
 <br>
 <% end %>

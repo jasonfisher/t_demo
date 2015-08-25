@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def show_tweets
     @user = get_user_or_current_user(params[:id])
-    @tweets = @user.tweets
+    @tweets = Tweet.where(:user_id => @user.id).order(created_at: :desc)
   end
 
 end
