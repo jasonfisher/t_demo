@@ -28,6 +28,12 @@ RSpec.describe Tweet, type: :model do
       end
     end
 
+    context "with valid parameters" do
+      it "creates a new tweet" do
+        @user = create(:user)
+        expect(Tweet.create(:user_id => @user.id, :content => "valid contnet")).to eq(Tweet.last)
+      end
+    end
   end
 
 #NOTE: not sure about this whole section; while it's nice to know tweets can't be updated, did I really need this section?
