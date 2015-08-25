@@ -1,0 +1,8 @@
+<% @tweets.each do |tweet| %>
+<p>
+<tr><td>Time tweeted</td><td>Tweet Content</td></tr>
+  <br>
+<tr><td><%= tweet.created_at %></td><td><%= tweet.content %></td></tr>
+</p>
+<br>
+<% end %>

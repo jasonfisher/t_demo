@@ -21,4 +21,10 @@ class UsersController < ApplicationController
     @user = get_user_or_current_user(params[:id])
     @followeds = @user.followeds
   end
+
+  def show_tweets
+    @user = get_user_or_current_user(params[:id])
+    @tweets = @user.tweets
+  end
+
 end
