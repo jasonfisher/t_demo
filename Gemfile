@@ -13,7 +13,10 @@ gem "factory_girl_rails", "~> 4.0"
 gem 'faker'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'bootstrap-sass'
+gem 'sass-rails'
+gem 'autoprefixer-rails'
+gem 'haml'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
