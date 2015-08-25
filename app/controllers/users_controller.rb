@@ -9,9 +9,7 @@ class UsersController < ApplicationController
 #TODO: refactor check for current user and redirects when not correct
   def show
     @user = get_user_or_current_user(params[:id])
-    if @user.id != current_user.id
-      redirect_to show_user_path(current_user.id)
-    end
+    @is_current_user = (@user.id == current_user.id)
   end
 
   def show_followers

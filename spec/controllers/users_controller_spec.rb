@@ -48,11 +48,14 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template :show
       end
 
+#TODO/NOTE: content is slightly different if one's own page vs somebody else's; tried for too long ot find a way to compare against
+      # content of the response body to test this but had to stop due to time contsraints
+
       context "when a user tries to view another user's home page" do
-        it "should redirect to the user's home page instead" do
+        it "should render :show template for whatever user id is given" do
           @user2 = create(:user)
           get :show, :id => @user2.id
-          expect(response).to redirect_to show_user_path(@user.id)
+          expect(response).to render_template :show
         end
       end
     end
