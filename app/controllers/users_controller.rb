@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
 #TODO: refactor check for current user and redirects when not correct
+# (can't seem to change /id in url due to circular redirect, might want to just show indication user doesn't exist, or add a route without an id?)
   def show
     @user = get_user_or_current_user(params[:id])
     @is_current_user = (@user.id == current_user.id)
