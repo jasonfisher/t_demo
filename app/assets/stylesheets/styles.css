@@ -1,7 +1,3 @@
-div.view_user {
-    font-family:verdana;
-    text-align:center;
-}
 div.tweeter {
     background-color:white;
     color:blue;
@@ -71,4 +67,41 @@ div.create_tweet {
 div.num_followers {
 
 }
+div.show_user_page {
+    column-count: 3;
+}
+span.view_username {
+    font-family:verdana;
+    text-align:left;
+    position: absolute;
+    width: 150px;
+    padding-right: 10px;
+}
+span.user_following {
+    position: absolute;
+    width: 150px;
+}
+span.user_followed {
+    position: absolute;
+    width: 150px;
+}
+span.tweets_list_header {
+    position: absolute;
+    width: 150px;
+}
+table.show_user_table {
+    font-family:verdana;
+    font-size: 150%;
+    font-weight:bold;
+}
+td.user_show_td {
+    width:150px;
+    padding:10px;
+    text-align:center;
+    font-family:verdana;
+    font-size: 150%;
+    font-weight:bold;
+    white-space: nowrap;
+}
+
 

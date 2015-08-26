@@ -1,5 +1,12 @@
 <p>
 </p>
+<p>
+</p>
+<br>
+<p>
+</p>
+<br>
+<div>
 <span class="view_username">
   <% if @is_current_user %>
     Welcome back, <%= @user.username %>!
@@ -7,13 +14,23 @@
     Home page of <%= @user.username %>
   <% end %>
 </span>
-<div class="user_following">
-  <%= link_to('Following', show_followers_url(@user.id), :method => :get) %> <%= @user.num_followers %> users
-</div>
-<div class="user_following">
-  <%= link_to('Followed by', show_followeds_url(@user.id), :method => :get) %> <%= @user.num_followeds %> users
-</div>
-<div class="tweets_list_header">
-  <%= link_to('Tweets', show_tweets_url(@user.id), :method => :get) %> <%= @user.num_tweets %> tweets
-</div>
+  </div>
+  <table class="user_show_table">
+    <tr>
+      <td class="user_show_td">Username</td><td class="user_show_td">       Following    </td><td class="user_show_td">       Followed by   </td><td class="user_show_td" >       Tweets    </td>
+    </tr>
+    <tr>
 
+    </tr>
+  </table>
+<br>
+<span class="user_following">
+  <%= link_to('Following', show_followers_url(@user.id), :method => :get) %> <%= @user.num_followers %> users
+</span>
+<span class="user_following">
+  <%= link_to('Followed by', show_followeds_url(@user.id), :method => :get) %> <%= @user.num_followeds %> users
+</span>
+<span class="tweets_list_header">
+  <%= link_to('Tweets', show_tweets_url(@user.id), :method => :get) %> <%= @user.num_tweets %> tweets
+</span>
+  </table>
