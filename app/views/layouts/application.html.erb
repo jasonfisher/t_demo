@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-    div.logout_link {
-        text-align:right;
-        padding-right:20%;
-    }
-</style>
   <link rel="stylesheets" href="styles.css">
   <title>TwitterDemo</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -15,8 +9,9 @@
 </head>
 <body>
 <% if user_signed_in? %>
-      <div class="logout_link"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
+      <span class="logout_link"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></span>
 <% end %>
+<span class="create_tweet"> <%= link_to('Create a tweet', tweets_new_path, :method => :get) %> </span>
 
     <%= yield %>
 

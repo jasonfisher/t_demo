@@ -1,9 +1,26 @@
+div.welcome_back {
+    font-family:verdana;
+    text-align:center;
+}
 div.tweeter {
     background-color:white;
     color:blue;
     font-family:verdana;
     font-weight:bold;
     font-size:80%;
+}
+span.tweet_date {
+    background-color:white;
+    color:gray;
+    font-weight:lighter;
+    font-family:verdana;
+    font-size:65%;
+}
+span.tweet {
+    background-color:white;
+    color:black;
+    font-family:verdana;
+    font-size:100%;
 }
 div.tweet_date {
     background-color:white;
@@ -20,16 +37,23 @@ div.tweet {
 }
 div.tweeter_username {
     background-color: white;
-    color:black;
-    font-family:verdana;
-    font-weight:bold;
-    font-size:150%;
-    text-align:center;
+    color: black;
+    font-family: verdana;
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
 }
-
-div.logout_link {
+span.create_tweet {
     text-align:right;
-    position:absolute;
+    padding-bottom:20px;
+    padding-left:400px;
+    font-size:x-large;
+}
+span.logout_link {
+    text-align:left;
+    padding-bottom:20px;
+    padding-left:100px;
+    font-size: x-large;
 }
 div.follower_name {
     background-color:blue;

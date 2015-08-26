@@ -1,0 +1,8 @@
+<% if @is_current_user %>
+<div class="welcome_back"><h1>Welcome back, <%= @user.username %>!</h1></div>
+<p>Coming soon:  your info, your tweets, how many you follow, how many follow you, and a link to who you could follow...</p>
+<% else %>
+<h1>Welcome to the home page of <%= @user.username %></h1>
+<p>Coming soon:  their info, their tweets, who they follow, who follows them, and (maybe) and a link to who you could follow...</p>
+
+<% end %>
