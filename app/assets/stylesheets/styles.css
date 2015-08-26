@@ -62,6 +62,12 @@ div.follower_name {
     font-weight:bold;
     font-size:100%;
 }
+div.create_tweet {
+    align-content:center;
+    padding-left:300px;
+    font-family: verdana;
+    font-size:300%;
+}
 div.num_followers {
 
 }

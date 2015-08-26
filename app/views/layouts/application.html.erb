@@ -8,11 +8,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% if user_signed_in? %>
+<% unless @hide_header %>
+    <% if user_signed_in? %>
       <span class="logout_link"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></span>
+    <% end %>
+    <span class="create_tweet"> <%= link_to('Create a tweet', tweets_new_path, :method => :get) %> </span>
 <% end %>
-<span class="create_tweet"> <%= link_to('Create a tweet', tweets_new_path, :method => :get) %> </span>
-
     <%= yield %>
 
 </body>

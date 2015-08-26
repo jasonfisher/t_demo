@@ -1,4 +1,4 @@
-<%= form_for @tweet, url: {action: "create"} do |f| %>
+<div class="create_tweet"><%= form_for @tweet, url: {action: "create"} do |f| %>
     <%= f.text_field :content %>
     <%= f.submit "Create Tweet" %>
-<% end %>
+<% end %></div>

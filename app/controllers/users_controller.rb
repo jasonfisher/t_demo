@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     @followeds = @user.followeds
   end
 
+#TODO: added ordering near end of dev, add test for this
   def show_tweets
     @user = get_user_or_current_user(params[:id])
     @tweets = Tweet.where(:user_id => @user.id).order(created_at: :desc)

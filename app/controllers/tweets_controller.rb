@@ -6,6 +6,7 @@ class TweetsController < ApplicationController
 
   def new
     @tweet = Tweet.new
+    @hide_header = true
   end
 
   def create
