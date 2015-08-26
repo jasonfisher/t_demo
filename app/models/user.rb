@@ -39,7 +39,21 @@ class User < ActiveRecord::Base
     true
   end
 
-#TODO: add fast query methods to get num followers and num followees
+#TODO: add rspec for hastily added query methods to get num followers and num followees
+  def num_followers
+    follower_ids = Following.where(:followed_id => self.id).pluck(:follower_id)
+    follower_ids.size
+  end
+
+  def num_followeds
+    followed_ids = Following.where(:follower_id => self.id).pluck(:followed_id)
+    followed_ids.size
+  end
+
+  def num_tweets
+    tweet_ids = Tweet.where(:user_id => self.id).pluck(:id)
+    tweet_ids.size
+  end
 
   #TODO! REFACTOR: followers and followeds are N+1 query situation that needs eager loading fixes;
   # (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
