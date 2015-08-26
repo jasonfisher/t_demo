@@ -2,6 +2,28 @@ require 'rails_helper'
 
 RSpec.describe TweetsController, type: :controller do
 
+  describe "post create" do
+      context "when user is not logged in" do
+        it "should redirect to login page " do
+          login_with nil
+          post :create, :content => "some tweet content"
+          expect(response).to redirect_to(new_user_session_path)
+        end
+      end
+
+      # context "when user is logged in" do
+      #   it "should validate tweet length" do
+      #     @user = create(:user)
+      #     login_with @user
+      #     content_hash = {["tweet"] => {["content"] => "valid content"}}
+      #     post :create, :content => content_hash
+      #     expect(response).to redirect_to(new_user_session_path)
+      #   end
+      # end
+
+
+  end
+
   # describe "get show_tweets" do
   #   context "when user is not logged in" do
   #     it "should redirect to login page " do
