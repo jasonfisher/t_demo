@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 #TODO: handle error cases: user does not exist, user is already following, call to user.follow fails with error
 #TODO: do better redirect with next link as param somehow
     current_user.unfollow(@user_to_unfollow)
-    redirect_to root_path
+    redirect_to show_unfollowed_users_path
   end
 
 end
