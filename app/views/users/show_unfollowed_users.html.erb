@@ -1,0 +1,21 @@
+<br><br>
+<div class="follow_view_username">Users followed by <%= @user.username %></div>
+<br><br><br><br><br>
+
+<% @followeds.each do |followed| %>
+    <table class="user_show_table">
+      <tr>
+        <td class="user_follow_show_td"> <%= link_to('Username:', show_user_url(followed.id), :method => :get) %> </td>
+        <td class="user_follow_show_td"> <%= link_to('Following', show_followers_url(followed.id), :method => :get) %> </td>
+        <td class="user_follow_show_td"> <%= link_to('Followed by', show_followeds_url(followed.id), :method => :get) %> </td>
+        <td class="user_follow_show_td"> <%= link_to('Tweets', show_tweets_url(followed.id), :method => :get) %> </td>
+      </tr>
+      <tr>
+        <td class="user_follow_show_td"> <%= followed.username %> </td>
+        <td class="user_follow_show_td"> <%= followed.num_followers %> </td>
+        <td class="user_follow_show_td"> <%= followed.num_followeds %> </td>
+        <td class="user_follow_show_td"> <%= followed.num_tweets %> </td>
+      </tr>
+    </table>
+    <br>
+<% end %>
