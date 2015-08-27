@@ -11,7 +11,7 @@
 <div class="header_links">
 <% unless @hide_header %>
     <% if user_signed_in? %>
-        <span class="home_link"><%= link_to('Home', show_user_url(@user.id), :method => :get) %></span>
+        <span class="home_link"><%= link_to('Home', show_user_url(current_user.id), :method => :get) %></span>
         <span class="create_tweet"> <%= link_to('Create a tweet', tweets_new_path, :method => :get) %> </span>
         <span class="unfollowed_users_link"><%= link_to('Who to follow', show_unfollowed_users_url(@user.id), :method => :get) %></span>
         <span class="logout_link"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></span>

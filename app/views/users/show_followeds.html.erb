@@ -1,5 +1,11 @@
 <br><br>
-<div class="follow_view_username"><%= @user.username %>, users you are following . . .</div>
+<div class="follow_view_username">
+  <% if @is_current_user %>
+      <%= @user.username %>, users you are following . . .
+  <% else %>
+    <%= @user.username %> is following . . .
+  <% end %>
+</div>
 <br><br><br><br><br>
 
 <% @followeds.each do |followed| %>
