@@ -42,12 +42,12 @@ class User < ActiveRecord::Base
 #TODO: add rspec for hastily added query methods to get num followers, num followees, num tweets, and associated link text
   def num_followers
     follower_ids = Following.where(:followed_id => self.id).pluck(:follower_id)
-    follower_ids.size
+    follower_ids.size - 1  #don't count yourself
   end
 
   def num_followeds
     followed_ids = Following.where(:follower_id => self.id).pluck(:followed_id)
-    followed_ids.size
+    followed_ids.size - 1   #don't count yourself
   end
 
   def num_tweets
