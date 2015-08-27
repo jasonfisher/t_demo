@@ -1,17 +1,17 @@
 <br><br>
-<div class="follow_view_username">Users you might follow: <%= @user.username %></div>
+<div class="follow_view_username">Users you might follow . . .</div>
 <br><br><br><br><br>
 
 <% @unfollowed_users.each do |unfollowed_user| %>
     <table class="user_show_table">
       <tr>
-        <td class="user_follow_show_td"> <%= link_to('Username:', show_user_url(unfollowed_user.id), :method => :get) %> </td>
+        <td class="user_follow_show_td"> <%= link_to(unfollowed_user.username, show_user_url(unfollowed_user.id), :method => :get) %> </td>
         <td class="user_follow_show_td"> <%= link_to('Following', show_followers_url(unfollowed_user.id), :method => :get) %> </td>
         <td class="user_follow_show_td"> <%= link_to('Followed by', show_followeds_url(unfollowed_user.id), :method => :get) %> </td>
         <td class="user_follow_show_td"> <%= link_to('Tweets', show_tweets_url(unfollowed_user.id), :method => :get) %> </td>
       </tr>
       <tr>
-        <td class="user_follow_show_td"> <%= unfollowed_user.username %> </td>
+        <td class="user_follow_show_td"> <%= link_to('Follow', follow_user_url(unfollowed_user.id), :method => :post) %> </td>
         <td class="user_follow_show_td"> <%= unfollowed_user.num_followers %> </td>
         <td class="user_follow_show_td"> <%= unfollowed_user.num_followeds %> </td>
         <td class="user_follow_show_td"> <%= unfollowed_user.num_tweets %> </td>

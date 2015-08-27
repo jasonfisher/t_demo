@@ -34,4 +34,20 @@ class UsersController < ApplicationController
     @unfollowed_users = @user.unfollowed_users
   end
 
+  def follow_user
+    @user_to_follow = User.find_by_id(params[:id])
+#TODO: handle error cases: user does not exist, user is already following, call to user.follow fails with error
+#TODO: do better redirect with next link as param somehow
+    current_user.follow(@user_to_follow)
+    redirect_to root_path
+  end
+
+  def unfollow_user
+    @user_to_unfollow = User.find_by_id(params[:id])
+#TODO: handle error cases: user does not exist, user is already following, call to user.follow fails with error
+#TODO: do better redirect with next link as param somehow
+    current_user.unfollow(@user_to_unfollow)
+    redirect_to root_path
+  end
+
 end

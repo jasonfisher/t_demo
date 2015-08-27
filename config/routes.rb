@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # get '/tweets/show_tweets/:id' => 'tweets#show_tweets', :as => :show_tweets
   get '/tweets/new' => 'tweets#new'
   post '/tweets/create' => 'tweets#create'
+  post '/users/follow_user/:id' => 'users#follow_user', :as => :follow_user
+  post '/users/unfollow_user/:id' => 'users#unfollow_user', :as => :unfollow_user
 
 
 
