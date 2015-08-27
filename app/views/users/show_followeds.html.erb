@@ -17,7 +17,9 @@
         <td class="user_follow_show_td"> <%= link_to('Tweets', show_tweets_url(followed.id), :method => :get) %> </td>
       </tr>
       <tr>
-        <td class="user_follow_show_td"> <%= link_to('Unfollow', unfollow_user_url(followed.id), :method => :post) %> </td>
+        <% if @is_current_user %>
+            <td class="user_follow_show_td"> <%= link_to('Unfollow', unfollow_user_url(followed.id), :method => :post) %> </td>
+        <% end %>
         <td class="user_follow_show_td"> <%= followed.num_followers %> </td>
         <td class="user_follow_show_td"> <%= followed.num_followeds %> </td>
         <td class="user_follow_show_td"> <%= followed.num_tweets %> </td>
