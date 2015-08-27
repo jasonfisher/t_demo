@@ -29,4 +29,9 @@ class UsersController < ApplicationController
     @tweets = Tweet.where(:user_id => @user.id).order(created_at: :desc)
   end
 
+  def show_unfollowed_users
+    @user = get_user_or_current_user(params[:id])
+    @unfollowed_users = @user.unfollowed_users
+  end
+
 end

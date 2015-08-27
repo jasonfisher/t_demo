@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/users/show/:id' => 'users#show', :as => :show_user
   get '/users/show_followers/:id' => 'users#show_followers', :as => :show_followers
   get '/users/show_followeds/:id' => 'users#show_followeds', :as => :show_followeds
+  get '/users/show_unfollowed_users/:id' => 'users#show_unfollowed_users', :as => :show_unfollowed_users
   get '/users/show_tweets/:id'    => 'users#show_tweets',    :as => :show_tweets
   # get '/tweets/show_tweets/:id' => 'tweets#show_tweets', :as => :show_tweets
   get '/tweets/new' => 'tweets#new'
