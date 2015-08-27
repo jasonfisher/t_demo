@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
     if id == current_user.id
       return current_user
     end
-    @user = User.find_by_id(id)
-    if @user.nil?
+    user = User.find_by_id(id)
+    if user.nil?
       return current_user
     else
-      return @user
+      return user
     end
 
   end
