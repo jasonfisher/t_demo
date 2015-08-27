@@ -11,19 +11,19 @@ span.home_link {
 span.create_tweet {
     text-align:right;
     padding-bottom:20px;
-    padding-left:250px;
+    padding-left:200px;
     font-size:x-large;
 }
 span.unfollowed_users_link {
     text-align:left;
     padding-bottom:20px;
-    padding-left:250px;
+    padding-left:200px;
     font-size: x-large;
 }
 span.logout_link {
     text-align:left;
     padding-bottom:20px;
-    padding-left:250px;
+    padding-left:200px;
     font-size: x-large;
 }
 /*/users/show*/
