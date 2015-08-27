@@ -17,10 +17,10 @@ span.tweet_date {
     padding-left:10px;
     padding-right:10px;
     background-color:white;
-    color:gray;
+    color:black;
     font-weight:lighter;
     font-family:verdana;
-    font-size:65%;
+    font-size:75%;
 }
 span.tweet {
     background-color:white;
@@ -45,7 +45,7 @@ div.tweeter_username {
     font-family: verdana;
     text-align:center;
     position:absolute;
-    padding-top:100px;
+    padding:20px;
     padding-left:116px;
     font-size:200%
 }

@@ -1,7 +1,9 @@
-<div class="tweeter_username">Tweets by user: <%= @user.username %></div>
+<div class="tweeter_username">Tweets by <%= @user.username %> . . .</div>
 <br><br><br><br><br>
 <% @tweets.each do |tweet| %>
+<div class="tweet_row">
 <span class="tweet_date"><%= tweet.created_at.strftime("%m %b %Y,%l:%M%P") %> </span>
 <span class="tweet"> -- <%= tweet.content %> </span>
-<br>
+</div>
+    <br>
 <% end %>
