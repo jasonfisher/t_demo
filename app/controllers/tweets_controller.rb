@@ -10,15 +10,12 @@ class TweetsController < ApplicationController
   end
 
   def create
-    logger.warn "***** entering with params: " + params.inspect
     @user = current_user
     @content = params[:tweet][:content]
-    logger.warn "********* @user: #{@user}, content #{@content} ******************"
     @tweet = Tweet.new
     @tweet.user_id = @user.id
     @tweet.content = @content
     if @tweet.valid?
-      logger.warn '*************** VALID ************************'
       @tweet.save!
       redirect_to show_tweets_path(@user.id)
     else

@@ -1,5 +1,3 @@
-# require 'rails_helper'
-
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -32,14 +30,14 @@ class User < ActiveRecord::Base
 
   def unfollow(other_user)
     raise "can not unfollow yourself" if (self.id == other_user.id)
-#NOTE: ActiveRecord::Relation might be returning > 1 value if that was somehow created in the database but we are trusting that is not the case cuz of tweet validations
     following = Following.where(["follower_id = ? and followed_id = ?", self.id, other_user.id]).first
+    #NOTE: in theory ActiveRecord::Relation might be returning > 1 value if that was somehow created in the database but we are trusting that is not the case cuz of tweet validations
     raise "not following that user" if following.nil?
     Following.delete(following.id)
     true
   end
 
-#TODO: add rspec for hastily added query methods to get num followers, num followees, num tweets, and associated link text
+#TODO: add rspec for last-minute added query methods num_followers, num_followees and num_tweets
   def num_followers
     follower_ids = Following.where(:followed_id => self.id).pluck(:follower_id)
     follower_ids.size - 1  #don't count yourself
@@ -54,7 +52,6 @@ class User < ActiveRecord::Base
     tweet_ids = Tweet.where(:user_id => self.id).pluck(:id)
     tweet_ids.size
   end
-
 
   #TODO! REFACTOR: followers and followeds are N+1 query situation that needs eager loading fixes;
   # (finding optimal way via with AR in rails 4 was slow and ambigiuous, so temp-only doing N+1 way to make it work (n is still small for now, at least, anyway))
