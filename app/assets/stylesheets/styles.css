@@ -115,8 +115,8 @@ td.user_home_show_td {
     white-space: nowrap;
 }
 td.user_follow_show_td {
-    width:125px;
-    padding-left:120px;
+    width:200px;
+    padding-left:100px;
     text-align:center;
     font-family:verdana;
     font-size: 150%;

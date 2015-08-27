@@ -6,16 +6,10 @@
 <% @followers.each do |follower| %>
     <table class="user_show_table">
       <tr>
-        <td class="user_follow_show_td"> <%= link_to('Username:', show_user_url(follower.id), :method => :get) %> </td>
-        <td class="user_follow_show_td"> <%= link_to('Following', show_followers_url(follower.id), :method => :get) %> </td>
-        <td class="user_follow_show_td"> <%= link_to('Followed by', show_followeds_url(follower.id), :method => :get) %> </td>
-        <td class="user_follow_show_td"> <%= link_to('Tweets', show_tweets_url(follower.id), :method => :get) %> </td>
-      </tr>
-      <tr>
-        <td class="user_follow_show_td"> <%= follower.username %> </td>
-        <td class="user_follow_show_td"> <%= follower.num_followers %> </td>
-        <td class="user_follow_show_td"> <%= follower.num_followeds %> </td>
-        <td class="user_follow_show_td"> <%= follower.num_tweets %> </td>
+        <td class="user_follow_show_td"> <%= link_to(follower.username, show_user_url(follower.id), :method => :get) %> </td>
+        <td class="user_follow_show_td"> Following <%= link_to(follower.num_followers, show_followers_url(follower.id), :method => :get) %></td>
+        <td class="user_follow_show_td"> Followed by <%= link_to(follower.num_followers, show_followeds_url(follower.id), :method => :get) %></td>
+        <td class="user_follow_show_td"> Tweets <%= link_to(follower.num_tweets,show_tweets_url(follower.id), :method => :get) %>  </td>
       </tr>
     </table>
 <br>
