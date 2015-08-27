@@ -154,6 +154,21 @@ RSpec.describe User, type: :model do
       @follower.unfollow(@followed)
       expect(@follower.followeds).to eq(User.find([@follower.id]))
     end
+
+    #NOTE: added to resolve bug found when unfollowing via the app
+    it "should then return an updated list of followeds" do
+      @followed2 = create(:user)
+      @followed3 = create(:user)
+      @followed4 = create(:user)
+      @follower.follow(@followed)
+      @follower.follow(@followed2)
+      @follower.follow(@followed3)
+      @follower.follow(@followed4)
+      expect(@follower.followeds).to eq(User.find([@followed4.id, @followed3.id, @followed2.id, @followed.id, @follower.id]))
+      @follower.unfollow(@followed3)
+      expect(@follower.followeds).to eq(User.find([@followed4.id, @followed2.id, @followed.id, @follower.id]))
+
+    end
   end
 
   context "when calling unfollowed_users" do
