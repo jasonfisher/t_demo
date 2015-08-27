@@ -1,5 +1,5 @@
 <div class="tweeter_username">Tweets by user: <%= @user.username %></div>
-<br>
+<br><br><br><br><br>
 <% @tweets.each do |tweet| %>
 <span class="tweet_date"><%= tweet.created_at.strftime("%m %b %Y,%l:%M%P") %> </span>
 <span class="tweet"> -- <%= tweet.content %> </span>
