@@ -15,11 +15,13 @@ class UsersController < ApplicationController
 
   def show_followers
     @user = get_user_or_current_user(params[:id])
+    @is_current_user = (@user.id == current_user.id)
     @followers = @user.followers - [@user]
   end
 
   def show_followeds
     @user = get_user_or_current_user(params[:id])
+    @is_current_user = (@user.id == current_user.id)
     @followeds = @user.followeds - [@user]
   end
 
@@ -34,6 +36,8 @@ class UsersController < ApplicationController
     @unfollowed_users = @user.unfollowed_users - [@user]
   end
 
+#NOTE: there are some errors happening where users are showing as followed but then fail to get unfollowed and vice versa
+#      additional model specs did not reveal any underlying issues so doing resuces here to deal with these failures
   def follow_user
     @user_to_follow = User.find_by_id(params[:id])
 #TODO: handle error cases: user does not exist, user is already following, call to user.follow fails with error
@@ -43,7 +47,7 @@ class UsersController < ApplicationController
     rescue RuntimeError => re
       logger.error "error following from user #{current_user.id} to #{params[:id]}"
     end
-    redirect_to show_unfollowed_users_path
+    redirect_to show_unfollowed_users_path(current_user.id)
   end
 
   def unfollow_user
@@ -56,7 +60,7 @@ class UsersController < ApplicationController
     rescue RuntimeError => re
       logger.error "error unfollowing from user #{current_user.id} to #{params[:id]}"
     end
-    redirect_to show_followeds_path
+    redirect_to show_followeds_path(current_user.id)
   end
 
 end
